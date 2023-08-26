@@ -28,17 +28,39 @@ async function run() {
         const carsCollections = client.db("carHub").collection("cars");
         const categorysCollections = client.db("carHub").collection("categorys");
 
-        // get all cars
+        // get all cars:
         app.get("/cars", async(req,res)=>{
             const cars = await carsCollections.find().toArray();
             res.send(cars);
         })
 
-        // get all category
+        // get single cars:
+        app.get("/cars/:id", async(req,res)=>{
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id)};
+            const result = await carsCollections.findOne(query);
+            res.send(result);
+        })
+
+
+        // -------------------category api------------------
+
+        // get all category:
         app.get("/categorys", async(req,res)=>{
             const categorys = await categorysCollections.find().toArray();
             res.send(categorys)
         })
+
+        // get single category:
+        app.get("/categorys/:id", async(req,res)=>{
+            const id = req.params.id;
+            const query = {category_id: id};
+            const result = await categorysCollections.findOne(query);
+            res.send(result);
+        })
+        
+
+
 
 
         await client.db("admin").command({ ping: 1 });
