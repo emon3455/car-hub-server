@@ -42,6 +42,14 @@ async function run() {
             res.send(result);
         })
 
+        // get all cars by category Id:
+        app.get("/getCarsByCategory/:id", async(req,res)=>{
+            const id = req.params.id;
+            const query =  {category_id: id};
+            const result = await carsCollections.find(query).toArray();
+            res.send(result);
+        })
+
 
         // -------------------category api------------------
 
