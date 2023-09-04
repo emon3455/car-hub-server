@@ -74,6 +74,48 @@ async function run() {
             res.send(result);
         })
 
+        // add single car:
+        app.post("/cars", async(req, res)=>{
+            const cars = req.body;
+            const result = await carsCollections.insertOne(cars);
+            res.send(result)
+        })
+
+        // delete single car:
+        app.delete("/cars/:id", async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id: new Object(id)};
+            const result = await carsCollections.deleteOne(query);
+            res.send(result);
+        })
+
+        // update cars:
+        app.put("/cars/:id", async(req,res)=>{
+            const id = req.params.id;
+            const car = req.body;
+
+            const filter = {_id: new ObjectId(id)};
+            const option = {upsert: true};
+
+            const updatedCar = {
+                $set:{
+                    sellerName: car.sellerName,
+                    sellerEmail: car.sellerEmail,
+                    picture: car.picture,
+                    toyName: car.toyName,
+                    category: car.category,
+                    category_id: car.category_id,
+                    price: car.price,
+                    rating: car.rating,
+                    availableQuantity: car.availableQuantity,
+                    description: car.description
+                }
+            }
+
+            const result = await carsCollections.updateOne(filter, updatedCar, option);
+            res.send(result);
+
+        })
 
         // -------------------category api------------------
 
