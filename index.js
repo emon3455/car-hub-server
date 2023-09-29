@@ -90,7 +90,34 @@ async function run() {
         })
 
         // update cars:
-        app.put("/cars/:id", async(req,res)=>{
+        // app.put("/cars/:id", async(req,res)=>{
+        //     const id = req.params.id;
+        //     const car = req.body;
+
+        //     const filter = {_id: new ObjectId(id)};
+        //     const option = {upsert: true};
+
+        //     const updatedCar = {
+        //         $set:{
+        //             sellerName: car.sellerName,
+        //             sellerEmail: car.sellerEmail,
+        //             picture: car.picture,
+        //             toyName: car.toyName,
+        //             category: car.category,
+        //             category_id: car.category_id,
+        //             price: car.price,
+        //             rating: car.rating,
+        //             availableQuantity: car.availableQuantity,
+        //             description: car.description
+        //         }
+        //     }
+
+        //     const result = await carsCollections.updateOne(filter, updatedCar, option);
+        //     res.send(result);
+
+        // })
+
+        app.patch("/cars/:id", async(req,res)=>{
             const id = req.params.id;
             const car = req.body;
 
@@ -99,10 +126,6 @@ async function run() {
 
             const updatedCar = {
                 $set:{
-                    sellerName: car.sellerName,
-                    sellerEmail: car.sellerEmail,
-                    picture: car.picture,
-                    toyName: car.toyName,
                     category: car.category,
                     category_id: car.category_id,
                     price: car.price,
